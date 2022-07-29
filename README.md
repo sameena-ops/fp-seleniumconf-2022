@@ -3,9 +3,11 @@
 1. Install Docker and visual studio code
 
 2. As a sample application we are using juice shop to setup that, follow the below link
-  https://github.com/juice-shop/juice-shop
+ 
+ https://github.com/juice-shop/juice-shop
 
-3. Install recent nodejs you can follow the below link, please make sure to use latest node version
+3. Install nodejs you can follow the below link, please make sure to use latest node version
+   
    https://nodejs.org/en/download/
 
 4. clone the below repo
