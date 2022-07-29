@@ -9,7 +9,7 @@ describe('Juice shop tests', function () {
         let driver = await new Builder().forBrowser("chrome").build();
         const url = "http://localhost:3000/#/";
         const username = "user1@gmail.com";
-        const password = "password@1";
+        const password = "demo@1";
         const addressName = 'SelConf22';
         const deliveryType = ['Standard Delivery', 'Fast Delivery', 'One Day Delivery'];
         const orderConfirmationMeesage = 'Thank you for your purchase!';
