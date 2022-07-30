@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "module": "main.js",
+  "type": "module",
   "scripts": {
-    "test": "mocha --timeout 50000"
+    "test": "mocha --timeout 50000 --require esm"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "esm": "^3.2.25",
     "ramda": "^0.28.0",
     "selenium-webdriver": "^4.3.0"
   },

@@ -25,5 +25,5 @@ Once you have the juice shop app up and running, please do the below setup
 Constants used in the script as below, you can replace these with your own data while running the script
 
 const username ="user1@gmail.com";
-const password = "demo@1";
+const password = "password@1";
 const addressName = 'SelConf22';

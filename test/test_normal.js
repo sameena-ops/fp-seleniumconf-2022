@@ -1,15 +1,15 @@
-const { Builder, By, Key, WebElement, locateWith, until, elementIsVisible, timeouts } = require("selenium-webdriver");
-var assert = require('assert');
-require('mocha');
+import pkg from 'selenium-webdriver';
+const { Builder, By, Key, WebElement, locateWith, until, timeouts, promise } = pkg;
+import assert from 'assert';
 
 describe('Juice shop tests', function () {
 
-    it.only('should be able to order required juices and validate the price of the order', async function () {
+    it('should be able to order required juices and validate the price of the order', async function () {
 
         let driver = await new Builder().forBrowser("chrome").build();
         const url = "http://localhost:3000/#/";
         const username = "user1@gmail.com";
-        const password = "demo@1";
+        const password = "password@1";
         const addressName = 'SelConf22';
         const deliveryType = ['Standard Delivery', 'Fast Delivery', 'One Day Delivery'];
         const orderConfirmationMeesage = 'Thank you for your purchase!';
@@ -79,13 +79,6 @@ async function getJuiceTypeItems(juices, string) {
     return favItems;
 }
 
-async function clickAddToBasket(elem, driver) {
-    let juiceElement = await driver.findElement(By.xpath(`//*[contains(text(), '${elem.name}')]`));
-    let basket = await driver.findElement(locateWith(By.tagName('button')).below(juiceElement));
-    await driver.executeScript("arguments[0].scrollIntoView(true);", basket);
-    await basket.click();
-}
-
 
 async function launchApplication(url, driver) {
 
@@ -98,8 +91,8 @@ async function launchApplication(url, driver) {
 async function login(username, password, driver) {
     await driver.findElement(By.id("navbarAccount")).click();
     await driver.findElement(By.id("navbarLoginButton")).click();
-    await driver.findElement(By.id("email")).sendKeys("nam@gmail.com");
-    await driver.findElement(By.id("password")).sendKeys("password@1");
+    await driver.findElement(By.id("email")).sendKeys(username);
+    await driver.findElement(By.id("password")).sendKeys(password);
     await driver.findElement(By.id("loginButton")).click();
 }
 
@@ -107,16 +100,6 @@ async function closeWelcomeMessages(driver) {
     await driver.findElement(By.xpath("//*[@aria-label='Close Welcome Banner']")).click();
     await driver.findElement(By.xpath("//a[text()='Me want it!']")).click();
 }
-
-
-async function login(username, password, driver) {
-    await driver.findElement(By.id("navbarAccount")).click();
-    await driver.findElement(By.id("navbarLoginButton")).click();
-    await driver.findElement(By.id("email")).sendKeys(username);
-    await driver.findElement(By.id("password")).sendKeys(password);
-    await driver.findElement(By.id("loginButton")).click();
-}
-
 
 async function clearBasket(driver) {
     var itemsInBasket = await driver.findElement(By.xpath("//*[@aria-label='Show the shopping cart']/span[1]/span[2]")).getText();
