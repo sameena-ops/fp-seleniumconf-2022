@@ -18,7 +18,7 @@ function mapRelevantValues(array)
     
     const mapOfJuiceNameAndPrices = await Promise.all(juices.map( element => element.getText()));
     const functions = R.pipe(R.split('\n'),mapRelevantValues);
-    var itemMappedToTheirPrices = (R.map(functions,mapOfJuiceNameAndPrices));
+    let itemMappedToTheirPrices = (R.map(functions,mapOfJuiceNameAndPrices));
     console.log(itemMappedToTheirPrices);
     return itemMappedToTheirPrices;
 }

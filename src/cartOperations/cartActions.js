@@ -6,7 +6,7 @@ const cartActionMethods = async (driver) =>{
 
     async function addItemsToCart(juices) {
 
-        for (var i = 0; i < juices.length; i++) {
+        for (let i = 0; i < juices.length; i++) {
             let juiceElement = await driver.findElement(By.xpath(`//*[contains(text(), '${juices[i].name}')]`));
             let basket = await driver.findElement(locateWith(By.tagName('button')).below(juiceElement));
             await driver.executeScript("arguments[0].scrollIntoView(true);", basket);
@@ -22,7 +22,7 @@ const cartActionMethods = async (driver) =>{
     
     
      async function checkoutCart() {
-        var checkoutBtn = await driver.findElement(By.id("checkoutButton"));
+        let checkoutBtn = await driver.findElement(By.id("checkoutButton"));
         await driver.executeScript("arguments[0].scrollIntoView(true);", checkoutBtn);
         await driver.wait(until.elementIsNotVisible(driver.findElement(By.className("cdk-overlay-container bluegrey-lightgreen-theme"))), 20000);
         await driver.wait(until.elementIsVisible(driver.findElement(By.id("checkoutButton"))), 10000);
@@ -55,10 +55,10 @@ const cartActionMethods = async (driver) =>{
     }
     
      async function getBonusPointsDisplayed() {
-        var a = await driver.findElement(By.className("bonus-points"));
-        var bonusPointsText = await a.getText();
+        let a = await driver.findElement(By.className("bonus-points"));
+        let bonusPointsText = await a.getText();
     
-        var bonusPoints = bonusPointsText.match(/(\d+)/)[0];
+        let bonusPoints = bonusPointsText.match(/(\d+)/)[0];
         return parseInt(bonusPoints);
     
     }

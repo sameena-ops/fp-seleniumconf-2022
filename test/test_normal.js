@@ -17,7 +17,7 @@ describe('Juice shop tests', function () {
         await driver.manage().setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT });
         await launchApplication(url, driver);
         await login(username, password, driver);
-        var juicePrices = await getAllItems(driver);
+        let juicePrices = await getAllItems(driver);
 
         const favJuices = await getJuiceTypeItems(juicePrices, 'juice only');
 
@@ -28,17 +28,17 @@ describe('Juice shop tests', function () {
         await selectDelivery(deliveryType[0], driver);
         await selectCardAndContinue(driver);
 
-        var expectedTotalPrice = getExpectedTotalPrice(favJuices, deliveryType[0]);
-        var actualTotalPrice = await totalCartPriceDisplayed(driver);
-        var actualDeliveryCharges = await totalDeliveryChargesDisplayed(driver);
-        var actualItemCharges = await totalItemChargesDisplayed(driver);
-        var actualBonusPoints = await getBonusPointsDisplayed(driver);
+        let expectedTotalPrice = getExpectedTotalPrice(favJuices, deliveryType[0]);
+        let actualTotalPrice = await totalCartPriceDisplayed(driver);
+        let actualDeliveryCharges = await totalDeliveryChargesDisplayed(driver);
+        let actualItemCharges = await totalItemChargesDisplayed(driver);
+        let actualBonusPoints = await getBonusPointsDisplayed(driver);
         assert.equal(actualDeliveryCharges, expectedDeliveryCharges(deliveryType[0]));
         assert.equal(actualItemCharges, expectedItemTotalPrice(favJuices));
         assert.equal(actualTotalPrice, expectedTotalPrice);
         assert.equal(actualBonusPoints, expectedBonusPoints(expectedTotalPrice));
         await placeYourOrderAndPay(driver);
-        var actualConfirmationMessage = await getOrderConfirmation(driver);
+        let actualConfirmationMessage = await getOrderConfirmation(driver);
         assert.equal(actualConfirmationMessage, orderConfirmationMeesage);
         await driver.close();
         await driver.quit();
@@ -48,8 +48,8 @@ describe('Juice shop tests', function () {
 
 
 async function getFavoriteJuicesBasedOnJuiceType(juices) {
-    var favJuices = [];
-    for (var i = 0; i < juices.length; i++) {
+    let favJuices = [];
+    for (let i = 0; i < juices.length; i++) {
         if (juices[i].name.includes('ml'))
             favJuices.push(juices[i]);
 
@@ -59,8 +59,8 @@ async function getFavoriteJuicesBasedOnJuiceType(juices) {
 }
 
 async function getFavoriteJuicesBasedOnPrice(juices) {
-    var favJuices = [];
-    for (var i = 0; i < juices.length; i++) {
+    let favJuices = [];
+    for (let i = 0; i < juices.length; i++) {
         if (praseInt(juices[i].price) >= 999)
             favJuices.push(juices[i]);
 
@@ -69,7 +69,7 @@ async function getFavoriteJuicesBasedOnPrice(juices) {
 }
 
 async function getJuiceTypeItems(juices, string) {
-    var favItems = [];
+    let favItems = [];
     if (string === 'juice only') {
         favItems = getFavoriteJuicesBasedOnJuiceType(juices);
     }
@@ -101,24 +101,6 @@ async function closeWelcomeMessages(driver) {
     await driver.findElement(By.xpath("//a[text()='Me want it!']")).click();
 }
 
-async function clearBasket(driver) {
-    var itemsInBasket = await driver.findElement(By.xpath("//*[@aria-label='Show the shopping cart']/span[1]/span[2]")).getText();
-
-    if (parseInt(itemsInBasket, 10) > 0) {
-        await driver.findElement(By.xpath("//*[@aria-label='Show the shopping cart']")).click();
-
-        await driver.sleep(2000);
-
-        for (var i = 0; i < itemsInBasket; i++) {
-            await driver.sleep(2000);
-            driver.findElement(By.xpath("//*[@data-icon='trash-alt']")).click();
-        }
-
-        driver.findElement(By.xpath("//*[@aria-label='Back to homepage']")).click();
-    }
-}
-
-
 
 
 async function navigateToCart(driver) {
@@ -128,12 +110,12 @@ async function navigateToCart(driver) {
 }
 
 async function navigateToTotalPrice(driver) {
-    var checkoutBtn = await driver.findElement(By.id("checkoutButton"));
+    let checkoutBtn = await driver.findElement(By.id("checkoutButton"));
     await driver.executeScript("arguments[0].scrollIntoView(true);", checkoutBtn);
 }
 
 async function checkoutCart(driver) {
-    var checkoutBtn = await driver.findElement(By.id("checkoutButton"));
+    let checkoutBtn = await driver.findElement(By.id("checkoutButton"));
     await driver.executeScript("arguments[0].scrollIntoView(true);", checkoutBtn);
     await driver.wait(until.elementIsVisible(driver.findElement(By.id("checkoutButton"))), 10000);
     await driver.wait(until.elementIsNotVisible(driver.findElement(By.className("cdk-overlay-container bluegrey-lightgreen-theme"))), 10000);
@@ -165,9 +147,9 @@ async function totalItemChargesDisplayed(driver) {
 }
 
 function expectedItemTotalPrice(items) {
-    var total = 0;
-    for (var i = 0; i < items.length; i++) {
-        var price = parseFloat(items[i].price);
+    let total = 0;
+    for (let i = 0; i < items.length; i++) {
+        let price = parseFloat(items[i].price);
         total = total + price;
     }
     console.log(`Total item charges calculated is :`, total);
@@ -226,15 +208,14 @@ async function placeYourOrderAndPay(driver) {
     console.log("Order has been places");
 }
 
-
 async function getAllItems(driver) {
 
     const juices = await driver.findElements(By.xpath("//*[@class='mat-grid-tile ng-star-inserted']"));
     const mapOfJuiceNameAndPrices = [];
 
-    for (var i = 0; i < juices.length; i++) {
-        var elementText = await juices[i].getText();
-        var allValuesOfElement = elementText.split('\n');
+    for (let i = 0; i < juices.length; i++) {
+        let elementText = await juices[i].getText();
+        let allValuesOfElement = elementText.split('\n');
         if (allValuesOfElement[3] === undefined) {
             mapOfJuiceNameAndPrices.push({
                 "name": allValuesOfElement[0],
@@ -255,7 +236,7 @@ async function getAllItems(driver) {
 }
 
 async function addJuicesToCart(juices, driver) {
-    for (var i = 0; i < juices.length; i++) {
+    for (let i = 0; i < juices.length; i++) {
         let juiceElement = await driver.findElement(By.xpath(`//*[contains(text(), '${juices[i].name}')]`));
         let basket = await driver.findElement(locateWith(By.tagName('button')).below(juiceElement));
         await driver.executeScript("arguments[0].scrollIntoView(true);", basket);
@@ -268,10 +249,10 @@ async function getOrderConfirmation(driver) {
 }
 
 async function getBonusPointsDisplayed(driver) {
-    var a = await driver.findElement(By.className("bonus-points"));
-    var bonusPointsText = await a.getText();
+    let a = await driver.findElement(By.className("bonus-points"));
+    let bonusPointsText = await a.getText();
 
-    var bonusPoints = bonusPointsText.match(/(\d+)/)[0];
+    let bonusPoints = bonusPointsText.match(/(\d+)/)[0];
     return parseInt(bonusPoints);
 
 }

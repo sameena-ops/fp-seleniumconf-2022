@@ -7,9 +7,9 @@ export const filterItems = (list, property,rule) => {
  const filtering = function (property) { 
     return function (rule) 
         { 
-            return function (item) { 
-            var value= R.prop(property,item);
-            var boolean = R.or(value.includes(rule), value>=(rule));
+        return function (item) { 
+            let value= R.prop(property,item);
+            let boolean = R.or(value.includes(rule), value>=(rule));
             return boolean;
  
  }}};

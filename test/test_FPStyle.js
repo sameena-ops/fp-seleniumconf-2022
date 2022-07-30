@@ -24,7 +24,7 @@ describe('Juice shop tests', function () {
         await userActions.login(data.username, data.password);
 
 
-        var juicePrices = await itemActions.getAllItems();
+        let juicePrices = await itemActions.getAllItems();
         //const favJuices = await filterItems(juicePrices,'price','0.99');
         const favJuices = await itemCalculations.filterItems(juicePrices, 'name', 'ml');
 

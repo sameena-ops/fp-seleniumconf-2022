@@ -13,7 +13,7 @@ const cartCalculations = async (cartItems) =>{
 
  function expectedItemTotalPrice() {
 
-    var total = cartItems.reduce((acc , item) => (acc + parseFloat(item.price) ),0);
+    let total = cartItems.reduce((acc , item) => (acc + parseFloat(item.price) ),0);
     console.log(`Total item charges calculated is :`, total);
     return total.toFixed(2);
 }

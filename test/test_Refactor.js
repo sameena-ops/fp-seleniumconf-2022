@@ -21,7 +21,7 @@ import * as R from 'ramda';
         await driver.manage().setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT });
         await launchApplication(url, driver);
         await login(username, password, driver);
-        var juicePrices = await getAllItems(driver);
+        let juicePrices = await getAllItems(driver);
 
         const favJuices = await getJuiceTypeItems(juicePrices,returnItemsWhichAreJuices);
 
@@ -32,17 +32,17 @@ import * as R from 'ramda';
         await selectDelivery(deliveryType[0], driver);
         await selectCardAndContinue(driver);
 
-        var expectedTotalPrice = getExpectedTotalPrice(favJuices, deliveryType[0]);
-        var actualTotalPrice = await totalCartPriceDisplayed(driver);
-        var actualDeliveryCharges = await totalDeliveryChargesDisplayed(driver);
-        var actualItemCharges = await totalItemChargesDisplayed(driver);
-        var actualBonusPoints = await getBonusPointsDisplayed(driver);
+        let expectedTotalPrice = getExpectedTotalPrice(favJuices, deliveryType[0]);
+        let actualTotalPrice = await totalCartPriceDisplayed(driver);
+        let actualDeliveryCharges = await totalDeliveryChargesDisplayed(driver);
+        let actualItemCharges = await totalItemChargesDisplayed(driver);
+        let actualBonusPoints = await getBonusPointsDisplayed(driver);
         assert.equal(actualDeliveryCharges, expectedDeliveryCharges(deliveryType[0]));
         assert.equal(actualItemCharges, expectedItemTotalPrice(favJuices));
         assert.equal(actualTotalPrice, expectedTotalPrice);
         assert.equal(actualBonusPoints, expectedBonusPoints(expectedTotalPrice));
         await placeYourOrderAndPay(driver);
-        var actualConfirmationMessage = await getOrderConfirmation(driver);
+        let actualConfirmationMessage = await getOrderConfirmation(driver);
         assert.equal(actualConfirmationMessage, orderConfirmationMeesage);
         await driver.close();
         await driver.quit();
@@ -94,14 +94,14 @@ async function closeWelcomeMessages(driver) {
 
 
 async function clearBasket(driver) {
-    var itemsInBasket = await driver.findElement(By.xpath("//*[@aria-label='Show the shopping cart']/span[1]/span[2]")).getText();
+    let itemsInBasket = await driver.findElement(By.xpath("//*[@aria-label='Show the shopping cart']/span[1]/span[2]")).getText();
 
     if (parseInt(itemsInBasket, 10) > 0) {
         await driver.findElement(By.xpath("//*[@aria-label='Show the shopping cart']")).click();
 
         await driver.sleep(2000);
 
-        for (var i = 0; i < itemsInBasket; i++) {
+        for (let i = 0; i < itemsInBasket; i++) {
             await driver.sleep(2000);
             driver.findElement(By.xpath("//*[@data-icon='trash-alt']")).click();
         }
@@ -121,7 +121,7 @@ async function navigateToCart(driver) {
 
 
 async function checkoutCart(driver) {
-    var checkoutBtn = await driver.findElement(By.id("checkoutButton"));
+    let checkoutBtn = await driver.findElement(By.id("checkoutButton"));
     await driver.executeScript("arguments[0].scrollIntoView(true);", checkoutBtn);
     await driver.wait(until.elementIsVisible(driver.findElement(By.id("checkoutButton"))), 10000);
     await driver.wait(until.elementIsNotVisible(driver.findElement(By.className("cdk-overlay-container bluegrey-lightgreen-theme"))), 10000);
@@ -154,7 +154,7 @@ async function totalItemChargesDisplayed(driver) {
 
 function expectedItemTotalPrice(items) {
 
-    var total = items.reduce((acc , item) => (acc + parseFloat(item.price) ),0);
+    let total = items.reduce((acc , item) => (acc + parseFloat(item.price) ),0);
     console.log(`Total item charges calculated is :`, total);
     return total.toFixed(2);
 }
@@ -225,14 +225,14 @@ async function getAllItems(driver) {
     
     const mapOfJuiceNameAndPrices = await Promise.all(juices.map( element => element.getText()));
     const functions = R.pipe(R.split('\n'),mapRelevantValues);
-    var itemMappedToTheirPrices = (R.map(functions,mapOfJuiceNameAndPrices));
+    let itemMappedToTheirPrices = (R.map(functions,mapOfJuiceNameAndPrices));
     console.log(itemMappedToTheirPrices);
     return itemMappedToTheirPrices;
 }
 
 
 /* async function addJuicesToCart(juices, driver) {
-    for (var i = 0; i < juices.length; i++) {
+    for (let i = 0; i < juices.length; i++) {
         let juiceElement = await driver.findElement(By.xpath(`//*[contains(text(), '${juices[i].name}')]`));
         let basket = await driver.findElement(locateWith(By.tagName('button')).below(juiceElement));
         await driver.executeScript("arguments[0].scrollIntoView(true);", basket);
@@ -275,10 +275,10 @@ async function getOrderConfirmation(driver) {
 }
 
 async function getBonusPointsDisplayed(driver) {
-    var a = await driver.findElement(By.className("bonus-points"));
-    var bonusPointsText = await a.getText();
+    let a = await driver.findElement(By.className("bonus-points"));
+    let bonusPointsText = await a.getText();
 
-    var bonusPoints = bonusPointsText.match(/(\d+)/)[0];
+    let bonusPoints = bonusPointsText.match(/(\d+)/)[0];
     return parseInt(bonusPoints);
 
 }
