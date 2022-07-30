@@ -57,7 +57,7 @@ describe('Juice shop tests', function () {
         await cartActions.placeYourOrderAndPay();
         const actualConfirmationMessage = await cartActions.getOrderConfirmation();
 
-        assert.equal(actualConfirmationMessage, orderConfirmationMeesage);
+        assert.equal(actualConfirmationMessage, data.orderConfirmationMeesage);
 
 
         await driver.close();

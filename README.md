@@ -27,3 +27,6 @@ Constants used in the script as below, you can replace these with your own data 
 const username ="user1@gmail.com";
 const password = "password@1";
 const addressName = 'SelConf22';
+
+To start application
+docker run -p 3000:3000 bkimminich/juice-shop 
